@@ -31,12 +31,6 @@ export const Route = createFileRoute("/about")({
 
 const skillIcons = [Code2, Brain, Database, Wrench];
 
-const stats = [
-  { value: "4+", label: "Projects Built" },
-  { value: "7+", label: "Activities" },
-  { value: "4", label: "Hackathons" },
-  { value: "1st", label: "Year B.Tech" },
-];
 
 const socials = [
   {
@@ -132,27 +126,7 @@ function AboutPage() {
         </motion.div>
       </section>
 
-      {/* Stats */}
-      <section className="px-6 pb-24">
-        <motion.div
-          className="mx-auto grid max-w-4xl grid-cols-2 gap-4 sm:grid-cols-4"
-          initial={{ opacity: 0, y: 44 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-        >
-          {stats.map((stat, i) => (
-            <SpotlightCard key={stat.label} className="text-center" color="#00d9ff">
-              <p className="text-3xl font-bold text-[#00d9ff] hero-name mb-2 relative z-10">
-                {stat.value}
-              </p>
-              <p className="font-mono text-[10px] tracking-widest text-white/40 uppercase relative z-10">
-                {stat.label}
-              </p>
-            </SpotlightCard>
-          ))}
-        </motion.div>
-      </section>
+
 
       {/* Skills */}
       <section className="px-6 pb-24">

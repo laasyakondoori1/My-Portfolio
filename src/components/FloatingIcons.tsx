@@ -28,7 +28,7 @@ export function FloatingIcons() {
     window.addEventListener("mousemove", handleMouseMove);
 
     // Setup particles
-    const numParticles = 400; // Can handle way more particles because canvas is fast!
+    const numParticles = 250; // Optimized count for smooth 60fps on all devices
     const spiralArms = 4;
     const particles = [];
 
@@ -107,17 +107,14 @@ export function FloatingIcons() {
         const b = p.isCyan ? 255 : 255;
 
         // Draw particle
-        ctx.beginPath();
-        ctx.arc(x, y, p.size, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${clampedOpacity})`;
-        ctx.fill();
+        ctx.fillRect(x - p.size / 2, y - p.size / 2, p.size, p.size);
 
         // Draw glow for larger particles
         if (p.size > 1.5) {
-          ctx.beginPath();
-          ctx.arc(x, y, p.size * 2.5, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${clampedOpacity * 0.3})`;
-          ctx.fill();
+          const glowSize = p.size * 5;
+          ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${clampedOpacity * 0.15})`;
+          ctx.fillRect(x - glowSize / 2, y - glowSize / 2, glowSize, glowSize);
         }
       }
 

@@ -140,7 +140,7 @@
 
   html,
   body {
-    background-color: #0a0a0a;
+    background-color: transparent;
     color: white;
     margin: 0;
     padding: 0;
@@ -299,3 +299,14 @@
   font-family: "Comfortaa", cursive;
   font-weight: 300;
 }
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Cloak Lovable Badges */
+[id*='lovable'], [class*='lovable'], div[style*='lovable'] { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }

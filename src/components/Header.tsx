@@ -6,6 +6,7 @@ import { motion, AnimatePresence, useMotionValue, useMotionTemplate } from "fram
 const navItems = [
   { label: "PROJECTS", to: "/projects" },
   { label: "CREDENTIALS", to: "/credentials" },
+  { label: "FORGE", to: "/skills" },
   { label: "ABOUT", to: "/about" },
 ] as const;
 

@@ -7,7 +7,7 @@ interface LiquidCanvasProps {
 
 export function LiquidCanvas({ color, isHovered }: LiquidCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  
+
   // Track state in refs so the animation loop always reads the latest values without re-mounting
   const isHoveredRef = useRef(isHovered);
   isHoveredRef.current = isHovered;
@@ -32,7 +32,7 @@ export function LiquidCanvas({ color, isHovered }: LiquidCanvasProps) {
       if (currentLevel < 0.01 && !isHoveredRef.current) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         isAnimating = false;
-        return; 
+        return;
       }
 
       time += 0.05;
@@ -63,7 +63,9 @@ export function LiquidCanvas({ color, isHovered }: LiquidCanvasProps) {
       ctx.lineTo(0, height);
       ctx.closePath();
 
-      let r = 0, g = 217, b = 255;
+      let r = 0,
+        g = 217,
+        b = 255;
       if (color.startsWith("#")) {
         const hex = color.replace("#", "");
         if (hex.length === 6) {
@@ -79,7 +81,10 @@ export function LiquidCanvas({ color, isHovered }: LiquidCanvasProps) {
       ctx.beginPath();
       ctx.moveTo(0, height);
       for (let x = 0; x <= width; x += 2) {
-        const y = baseHeight + Math.sin((x / waveLength) * Math.PI * 2 + time + Math.PI) * (waveHeight * 0.8) - 4;
+        const y =
+          baseHeight +
+          Math.sin((x / waveLength) * Math.PI * 2 + time + Math.PI) * (waveHeight * 0.8) -
+          4;
         ctx.lineTo(x, y);
       }
       ctx.lineTo(width, height);
@@ -95,7 +100,7 @@ export function LiquidCanvas({ color, isHovered }: LiquidCanvasProps) {
     render();
 
     // The trick to restarting the loop if it died:
-    // we attach a fast check interval or just use a proxy. 
+    // we attach a fast check interval or just use a proxy.
     // Actually, setInterval is very lightweight and guarantees restart.
     const watchDog = setInterval(() => {
       if (isHoveredRef.current && !isAnimating) {
