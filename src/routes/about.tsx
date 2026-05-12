@@ -31,7 +31,6 @@ export const Route = createFileRoute("/about")({
 
 const skillIcons = [Code2, Brain, Database, Wrench];
 
-
 const socials = [
   {
     icon: Mail,
@@ -125,8 +124,6 @@ function AboutPage() {
           </div>
         </motion.div>
       </section>
-
-
 
       {/* Skills */}
       <section className="px-6 pb-24">

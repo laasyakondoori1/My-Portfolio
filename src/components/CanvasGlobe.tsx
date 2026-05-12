@@ -47,7 +47,7 @@ export function CanvasGlobe() {
 
     // Generate random stable positions for the orbiting icons
     const iconPositions = orbitingSkills.map((_, i) => {
-      const y = 1 - (i / (orbitingSkills.length - 1)) * 2; 
+      const y = 1 - (i / (orbitingSkills.length - 1)) * 2;
       const radiusAtY = Math.sqrt(1 - y * y);
       const theta = phi * i * 5;
 
@@ -95,7 +95,7 @@ export function CanvasGlobe() {
     const render = () => {
       currentRotationX += (targetRotationX - currentRotationX) * 0.1;
       currentRotationY += (targetRotationY - currentRotationY) * 0.1;
-      
+
       // Auto-rotation when not dragging and not hovering an icon
       if (!isDragging && !isHoveringIconRef.current) {
         targetRotationY += 0.002;
@@ -118,14 +118,14 @@ export function CanvasGlobe() {
         const p = points[i];
 
         // Apply Y rotation
-        let x1 = p.x * Math.cos(currentRotationY) - p.z * Math.sin(currentRotationY);
-        let z1 = p.x * Math.sin(currentRotationY) + p.z * Math.cos(currentRotationY);
-        let y1 = p.y;
+        const x1 = p.x * Math.cos(currentRotationY) - p.z * Math.sin(currentRotationY);
+        const z1 = p.x * Math.sin(currentRotationY) + p.z * Math.cos(currentRotationY);
+        const y1 = p.y;
 
         // Apply X rotation
-        let y2 = y1 * Math.cos(currentRotationX) - z1 * Math.sin(currentRotationX);
-        let z2 = y1 * Math.sin(currentRotationX) + z1 * Math.cos(currentRotationX);
-        let x2 = x1;
+        const y2 = y1 * Math.cos(currentRotationX) - z1 * Math.sin(currentRotationX);
+        const z2 = y1 * Math.sin(currentRotationX) + z1 * Math.cos(currentRotationX);
+        const x2 = x1;
 
         // Perspective projection
         const zCamera = z2 * globeRadius + 300;
@@ -153,25 +153,25 @@ export function CanvasGlobe() {
         const el = iconRefs.current[i];
         if (!el) continue;
 
-        let x1 = p.x * Math.cos(currentRotationY) - p.z * Math.sin(currentRotationY);
-        let z1 = p.x * Math.sin(currentRotationY) + p.z * Math.cos(currentRotationY);
-        let y1 = p.y;
+        const x1 = p.x * Math.cos(currentRotationY) - p.z * Math.sin(currentRotationY);
+        const z1 = p.x * Math.sin(currentRotationY) + p.z * Math.cos(currentRotationY);
+        const y1 = p.y;
 
-        let y2 = y1 * Math.cos(currentRotationX) - z1 * Math.sin(currentRotationX);
-        let z2 = y1 * Math.sin(currentRotationX) + z1 * Math.cos(currentRotationX);
-        let x2 = x1;
+        const y2 = y1 * Math.cos(currentRotationX) - z1 * Math.sin(currentRotationX);
+        const z2 = y1 * Math.sin(currentRotationX) + z1 * Math.cos(currentRotationX);
+        const x2 = x1;
 
-        const zCamera = z2 * iconOrbitRadius + 300; 
+        const zCamera = z2 * iconOrbitRadius + 300;
         if (zCamera <= 0) {
           el.style.opacity = "0";
-          continue; 
+          continue;
         }
 
         const scale = focalLength / zCamera;
         const projectedX = centerX + x2 * iconOrbitRadius * scale;
         const projectedY = centerY + y2 * iconOrbitRadius * scale;
-        
-        const normalizedDepth = (z2 + 1) / 2; 
+
+        const normalizedDepth = (z2 + 1) / 2;
         const opacity = Math.max(0.1, normalizedDepth * 1.2);
         const elementScale = Math.max(0.4, scale * 1.1);
 
@@ -200,7 +200,7 @@ export function CanvasGlobe() {
         className="w-full h-full cursor-grab active:cursor-grabbing z-10"
         style={{ touchAction: "none" }}
       />
-      
+
       {/* Icon Overlay Layer */}
       <div className="absolute inset-0 w-full h-full pointer-events-none z-20">
         {orbitingSkills.map((skill, index) => (
@@ -216,7 +216,7 @@ export function CanvasGlobe() {
             <div className="relative flex items-center justify-center w-12 h-12 transition-transform duration-300 ease-out group-hover/icon:scale-[1.3]">
               {/* Intense ambient glow on hover */}
               <div className="absolute inset-0 bg-[#00d9ff] opacity-0 group-hover/icon:opacity-30 blur-xl rounded-full transition-opacity duration-300" />
-              
+
               {/* The sharp SVG icon */}
               <img
                 src={`https://cdn.simpleicons.org/${skill.slug}/00d9ff`}
@@ -225,7 +225,7 @@ export function CanvasGlobe() {
                 draggable={false}
               />
             </div>
-            
+
             {/* Tooltip Name Label */}
             <div className="absolute top-full mt-2 px-3 py-1 rounded-md bg-[#0a0a0a]/90 border border-[#00d9ff]/30 text-[#00d9ff] text-[10px] font-bold tracking-widest whitespace-nowrap opacity-0 -translate-y-2 pointer-events-none transition-all duration-300 group-hover/icon:opacity-100 group-hover/icon:translate-y-0 backdrop-blur-sm shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
               {skill.name.toUpperCase()}
