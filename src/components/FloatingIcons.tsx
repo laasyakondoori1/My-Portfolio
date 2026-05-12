@@ -30,7 +30,7 @@ export function FloatingIcons() {
     // Setup particles
     const numParticles = 250; // Optimized count for smooth 60fps on all devices
     const spiralArms = 4;
-    const particles = [];
+    const particles: { radius: number; baseAngle: number; size: number; opacity: number; isCyan: boolean; speed: number }[] = [];
 
     for (let i = 0; i < numParticles; i++) {
       const arm = i % spiralArms;

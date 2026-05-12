@@ -206,7 +206,7 @@ export function CanvasGlobe() {
         {orbitingSkills.map((skill, index) => (
           <div
             key={skill.slug}
-            ref={(el) => (iconRefs.current[index] = el)}
+            ref={(el) => { iconRefs.current[index] = el; }}
             className="absolute top-0 left-0 will-change-transform pointer-events-auto cursor-pointer flex flex-col items-center justify-center group/icon"
             style={{ transformOrigin: "0 0" }}
             onMouseEnter={() => (isHoveringIconRef.current = true)}
