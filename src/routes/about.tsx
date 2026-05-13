@@ -12,6 +12,7 @@ import {
   Brain,
   Database,
   Wrench,
+  Code,
 } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -39,8 +40,9 @@ const socials = [
     href: "mailto:laasyakondoori@gmail.com",
   },
   { icon: Phone, label: "Phone", value: "+91 79811 *****", href: "tel:+917981173765" },
-  { icon: Linkedin, label: "LinkedIn", value: "LinkedIn Profile", href: "https://linkedin.com" },
-  { icon: Github, label: "GitHub", value: "GitHub Profile", href: "https://github.com" },
+  { icon: Linkedin, label: "LinkedIn", value: "laasya-kondoori", href: "https://www.linkedin.com/in/laasya-kondoori-6b69b92a0/" },
+  { icon: Github, label: "GitHub", value: "laasyakondoori1", href: "https://github.com/laasyakondoori1" },
+  { icon: Code, label: "LeetCode", value: "laasya_kondoori", href: "https://leetcode.com/u/laasya_kondoori/" },
 ];
 
 function AboutPage() {

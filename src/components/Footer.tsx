@@ -20,7 +20,7 @@ export function Footer() {
             <Phone size={16} />
           </a>
           <a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/in/laasya-kondoori-6b69b92a0/"
             target="_blank"
             rel="noopener noreferrer"
             className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary hover:text-primary"
@@ -29,7 +29,7 @@ export function Footer() {
             <Linkedin size={16} />
           </a>
           <a
-            href="https://github.com"
+            href="https://github.com/laasyakondoori1"
             target="_blank"
             rel="noopener noreferrer"
             className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary hover:text-primary"

@@ -20,6 +20,7 @@ import {
   Github,
   Linkedin,
   Briefcase,
+  Code,
 } from "lucide-react";
 import { Header } from "@/components/Header";
 import { SpotlightButton } from "@/components/SpotlightButton";
@@ -523,7 +524,7 @@ function Index() {
               </SpotlightButton>
 
               <SpotlightButton
-                href="https://github.com/laasyapriya"
+                href="https://github.com/laasyakondoori1"
                 color="#ffffff"
                 style={{ padding: "10px 20px", fontSize: "11px", fontWeight: 700 }}
               >
@@ -532,12 +533,21 @@ function Index() {
               </SpotlightButton>
 
               <SpotlightButton
-                href="https://linkedin.com/in/laasyapriya"
+                href="https://www.linkedin.com/in/laasya-kondoori-6b69b92a0/"
                 color="#0a66c2"
                 style={{ padding: "10px 20px", fontSize: "11px", fontWeight: 700 }}
               >
                 <Linkedin size={14} />
                 LinkedIn
+              </SpotlightButton>
+
+              <SpotlightButton
+                href="https://leetcode.com/u/laasya_kondoori/"
+                color="#f89f1b"
+                style={{ padding: "10px 20px", fontSize: "11px", fontWeight: 700 }}
+              >
+                <Code size={14} />
+                LeetCode
               </SpotlightButton>
             </div>
           </div>
