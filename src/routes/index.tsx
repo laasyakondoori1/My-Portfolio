@@ -19,6 +19,7 @@ import {
   BookOpen,
   Github,
   Linkedin,
+  Briefcase,
 } from "lucide-react";
 import { Header } from "@/components/Header";
 import { SpotlightButton } from "@/components/SpotlightButton";
@@ -368,53 +369,98 @@ function Index() {
       {/* Experience */}
       <section className="py-28 px-6">
         <motion.div
-          className="w-full max-w-4xl mx-auto"
+          className="w-full max-w-5xl mx-auto"
           initial={{ opacity: 0, y: 44 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          <div className="mb-10 text-center">
-            <p className="text-white/25 text-xs tracking-[0.35em] uppercase mb-2 font-mono">
-              Education
+          <div className="mb-16">
+            <p className="text-white/40 text-xs tracking-[0.3em] uppercase mb-2 font-mono">
+              Education & Work
             </p>
-            <h2 className="hero-name text-3xl sm:text-4xl md:text-5xl">Experience</h2>
+            <h2 className="hero-name text-4xl sm:text-5xl md:text-6xl">Experience</h2>
           </div>
 
-          <div className="mx-auto mt-12 max-w-2xl">
-            <div
-              className="rounded-2xl p-6 h-fit"
-              style={{ background: "#0d0d0d", border: "1px solid rgba(0,217,255,0.18)" }}
-            >
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center overflow-hidden bg-white/5 border border-white/10 shrink-0">
-                    <GraduationCap size={24} className="text-[#00d9ff]" />
-                  </div>
-                  <div>
-                    <h3
-                      className="text-white font-semibold text-lg"
-                      style={{ fontFamily: "DM Sans, sans-serif" }}
-                    >
-                      {personalInfo.degree}
-                    </h3>
-                    <p
-                      className="text-[#00d9ff] text-sm"
-                      style={{ fontFamily: "DM Sans, sans-serif" }}
-                    >
-                      {personalInfo.university}
-                    </p>
-                    <p
-                      className="text-white/40 text-xs mt-1"
-                      style={{ fontFamily: "DM Sans, sans-serif" }}
-                    >
-                      Hyderabad, Telangana
-                    </p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 relative">
+            {/* Left Column: Education */}
+            <div className="relative pl-8">
+              {/* Timeline Line */}
+              <div className="absolute left-0 top-2 bottom-0 w-px bg-white/10" />
+              {/* Timeline Dot */}
+              <div className="absolute left-[-4px] top-2 w-2.5 h-2.5 rounded-full bg-[#00d9ff] shadow-[0_0_10px_#00d9ff]" />
+
+              <p className="text-[#00d9ff] font-mono text-sm mb-4 tracking-wider">
+                {personalInfo.eduYears}
+              </p>
+              
+              <h3 className="text-white text-2xl md:text-3xl font-bold mb-1" style={{ fontFamily: "DM Sans, sans-serif" }}>
+                {personalInfo.degree}
+              </h3>
+              
+              <p className="text-white/60 text-base mb-1">
+                {personalInfo.university}
+              </p>
+              <p className="text-white/40 text-sm mb-8">
+                {personalInfo.location}
+              </p>
+
+              {/* University Image */}
+              <div 
+                className="w-full h-48 sm:h-56 rounded-xl overflow-hidden relative group"
+                style={{ border: "1px solid rgba(255,255,255,0.06)" }}
+              >
+                <img 
+                  src="/anurag-university.png" 
+                  alt="Anurag University Campus" 
+                  className="w-full h-full object-cover grayscale opacity-80 transition-all duration-500 group-hover:grayscale-0 group-hover:opacity-100"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0d] via-transparent to-transparent pointer-events-none opacity-80 transition-opacity duration-500 group-hover:opacity-40" />
+                <div className="absolute bottom-4 left-4 z-10 pointer-events-none">
+                  <div className="text-white/60 font-mono text-[10px] tracking-widest transition-colors duration-500 group-hover:text-white">
+                    CAMPUS AERIAL VIEW
                   </div>
                 </div>
-                <span className="text-white/40 text-xs px-3 py-1 rounded-full border border-white/10 bg-white/5 whitespace-nowrap w-fit font-mono">
-                  {personalInfo.eduYears}
-                </span>
+              </div>
+            </div>
+
+            {/* Right Column: Experience */}
+            <div 
+              className="rounded-2xl p-8 relative overflow-hidden h-fit"
+              style={{ background: "#0d0d0d", border: "1px solid rgba(245,158,11,0.2)" }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-[#f59e0b]/5 to-transparent pointer-events-none" />
+              
+              <div className="flex justify-between items-start mb-6">
+                <p className="text-[#f59e0b] font-mono text-xs tracking-widest uppercase">
+                  RECENT INTERNSHIP
+                </p>
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center border border-[#f59e0b]/30 bg-[#f59e0b]/10">
+                  <Briefcase size={18} className="text-[#f59e0b]" />
+                </div>
+              </div>
+
+              <h3 className="text-white text-2xl font-bold mb-2" style={{ fontFamily: "DM Sans, sans-serif" }}>
+                Web Developer Intern
+              </h3>
+              
+              <p className="text-[#f59e0b] text-base font-medium mb-6">
+                Elitceler Technologies
+              </p>
+
+              <p className="text-white/50 text-sm leading-relaxed mb-8">
+                Worked on projects from different clients all the way from frontend to research to backend and API integration, mainly on a government website for Malkajgiri Commissionerate, Hyderabad.
+              </p>
+
+              <div className="flex flex-wrap gap-2">
+                {['Frontend', 'Backend', 'API Integration', 'Research', 'Govt Projects', 'Web Dev'].map(skill => (
+                  <span 
+                    key={skill}
+                    className="text-[#f59e0b] text-[11px] font-mono px-3 py-1.5 rounded-full border border-[#f59e0b]/20 bg-[#f59e0b]/5"
+                  >
+                    {skill}
+                  </span>
+                ))}
               </div>
             </div>
           </div>
