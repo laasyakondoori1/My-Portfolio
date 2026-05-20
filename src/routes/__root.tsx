@@ -11,6 +11,7 @@ import {
 import appCss from "../styles.css?url";
 import { CustomCursor } from "@/components/CustomCursor";
 import { FloatingIcons } from "@/components/FloatingIcons";
+import { HideAndSeekOverlay } from "@/components/HideAndSeekOverlay";
 
 function NotFoundComponent() {
   return (
@@ -109,6 +110,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <FloatingIcons />
       <CustomCursor />
+      <HideAndSeekOverlay />
       <Outlet />
     </QueryClientProvider>
   );

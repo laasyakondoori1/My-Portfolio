@@ -1,7 +1,8 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import { useState, MouseEvent } from "react";
-import { Menu, X, Home } from "lucide-react";
+import { Menu, X, Home, Eye, EyeOff } from "lucide-react";
 import { motion, AnimatePresence, useMotionValue, useMotionTemplate } from "framer-motion";
+import { useHideAndSeek, toggleHideAndSeek } from "@/hooks/useHideAndSeek";
 
 const navItems = [
   { label: "PROJECTS", to: "/projects" },
@@ -16,6 +17,7 @@ export function Header() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const [isHovered, setIsHovered] = useState(false);
+  const isHideAndSeekActive = useHideAndSeek();
 
   function handleMouseMove({ currentTarget, clientX, clientY }: MouseEvent) {
     const { left, top } = currentTarget.getBoundingClientRect();
@@ -97,6 +99,29 @@ export function Header() {
           </div>
 
           <div className="flex items-center gap-3">
+            <button
+              onClick={toggleHideAndSeek}
+              className={`relative overflow-hidden p-2 rounded-xl transition-all duration-300 flex items-center justify-center ${
+                isHideAndSeekActive 
+                  ? "bg-[#00d9ff]/20 text-[#00d9ff] shadow-[0_0_15px_rgba(0,217,255,0.4)]" 
+                  : "bg-white/5 hover:bg-white/10 text-white/70 hover:text-white"
+              }`}
+              title="Toggle Stealth Mode"
+              aria-label="Toggle Stealth Mode"
+            >
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={isHideAndSeekActive ? "active" : "inactive"}
+                  initial={{ opacity: 0, scale: 0.8, rotate: -90 }}
+                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                  exit={{ opacity: 0, scale: 0.8, rotate: 90 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {isHideAndSeekActive ? <EyeOff size={16} /> : <Eye size={16} />}
+                </motion.div>
+              </AnimatePresence>
+            </button>
+
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="md:hidden p-2 rounded-xl bg-white/5 hover:bg-white/10 transition-colors"

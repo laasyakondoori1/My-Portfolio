@@ -251,35 +251,17 @@ function Index() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
             <div
-              className="rounded-2xl relative overflow-hidden select-none"
+              className="group rounded-2xl relative overflow-hidden select-none"
               style={{
                 background: "#0d0d0d",
                 border: "1px solid rgba(255,255,255,0.06)",
                 minHeight: "200px",
                 transition: "border-color .3s",
-                cursor: "default",
+                cursor: "crosshair",
               }}
             >
-              <div className="absolute inset-0 p-6 flex flex-col justify-between z-10">
-                <div
-                  className="absolute inset-0 pointer-events-none"
-                  style={{
-                    background:
-                      "radial-gradient(ellipse at 70% 60%, rgba(0,217,255,0.1) 0%, transparent 65%)",
-                  }}
-                ></div>
-                <div className="relative flex items-center gap-1.5 text-white/30 text-xs font-mono">
-                  <MapPin size={12} /> LOCATION · HOVER TO EXPLORE
-                </div>
-                <div className="relative">
-                  <div className="text-white font-bold text-3xl mb-1.5 hero-name">INDIA</div>
-                  <div className="text-white/35 text-xs mb-0.5 font-mono">
-                    {personalInfo.coords}
-                  </div>
-                  <div className="text-white/25 text-xs font-mono">{personalInfo.timezone}</div>
-                </div>
-              </div>
-              <div className="absolute inset-0 rounded-2xl overflow-hidden">
+              {/* Default Grid Background (fades out on hover) */}
+              <div className="absolute inset-0 rounded-2xl overflow-hidden transition-opacity duration-500 group-hover:opacity-0">
                 <div
                   className="absolute inset-0"
                   style={{
@@ -294,14 +276,49 @@ function Index() {
                     backgroundSize: "20px 20px",
                   }}
                 ></div>
-                <div className="absolute bottom-3 left-4 right-4 flex justify-between items-end z-20">
-                  <span className="text-[#00d9ff]/60 text-[10px] font-mono">
-                    INDIA · {personalInfo.timezone}
-                  </span>
-                  <span className="text-[#00d9ff]/35 text-[9px] font-mono">
-                    {personalInfo.coords}
-                  </span>
+              </div>
+
+              {/* Hover Image Background (fades in on hover) */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 overflow-hidden">
+                <img 
+                  src="/images/charminar.jpg" 
+                  alt="Charminar" 
+                  className="w-full h-full object-cover opacity-60 mix-blend-luminosity"
+                />
+                <div className="absolute inset-0 bg-[#00d9ff]/10 mix-blend-overlay"></div>
+                {/* Scanning line animation */}
+                <div 
+                  className="absolute left-0 right-0 h-[2px] bg-[#00d9ff] shadow-[0_0_15px_3px_rgba(0,217,255,0.8)] opacity-0 group-hover:opacity-100 group-hover:animate-scan z-10"
+                ></div>
+              </div>
+
+              <div className="absolute inset-0 p-6 flex flex-col justify-between z-10 pointer-events-none">
+                <div
+                  className="absolute inset-0 pointer-events-none transition-opacity duration-500 group-hover:opacity-0"
+                  style={{
+                    background:
+                      "radial-gradient(ellipse at 70% 60%, rgba(0,217,255,0.1) 0%, transparent 65%)",
+                  }}
+                ></div>
+                <div className="relative flex items-center gap-1.5 text-white/30 text-xs font-mono transition-colors duration-500 group-hover:text-[#00d9ff]">
+                  <MapPin size={12} /> LOCATION · HOVER TO EXPLORE
                 </div>
+                <div className="relative">
+                  <div className="text-white font-bold text-2xl sm:text-3xl mb-1.5 hero-name transition-transform duration-500 origin-left group-hover:scale-105">INDIA, HYDERABAD</div>
+                  <div className="text-white/35 text-xs mb-0.5 font-mono">
+                    {personalInfo.coords}
+                  </div>
+                  <div className="text-white/25 text-xs font-mono">{personalInfo.timezone}</div>
+                </div>
+              </div>
+
+              <div className="absolute bottom-3 left-4 right-4 flex justify-between items-end z-20 pointer-events-none">
+                <span className="text-[#00d9ff]/60 text-[10px] font-mono">
+                  INDIA, HYDERABAD · {personalInfo.timezone}
+                </span>
+                <span className="text-[#00d9ff]/35 text-[9px] font-mono">
+                  {personalInfo.coords}
+                </span>
               </div>
             </div>
 
