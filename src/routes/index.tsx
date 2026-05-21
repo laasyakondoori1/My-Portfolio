@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
 import React, { useState, useEffect } from "react";
 import {
   MapPin,
@@ -42,38 +42,43 @@ export const Route = createFileRoute("/")({
 
 function RoleRotator() {
   const [index, setIndex] = useState(0);
-  const [isAnimatingOut, setIsAnimatingOut] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setIsAnimatingOut(true);
-      setTimeout(() => {
-        setIndex((i) => (i + 1) % roles.length);
-        setIsAnimatingOut(false);
-      }, 350);
-    }, 2500);
+      setIndex((i) => (i + 1) % roles.length);
+    }, 3000);
     return () => clearInterval(interval);
   }, []);
 
   return (
     <>
-      <div className="role-word-wrap mb-4">
-        <span
-          className={`hero-role text-5xl md:text-7xl ${isAnimatingOut ? "role-out" : "role-in"}`}
-        >
-          {roles[index]}
-        </span>
+      <div className="role-word-wrap mb-4 h-[80px] flex items-center justify-center relative">
+        <AnimatePresence mode="wait">
+          <motion.span
+            key={index}
+            className="hero-role text-5xl md:text-7xl absolute"
+            initial={{ opacity: 0, y: 20, filter: "blur(10px) brightness(2)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px) brightness(1)" }}
+            exit={{ opacity: 0, y: -20, filter: "blur(10px) brightness(2)" }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            style={{ textShadow: "0 0 20px rgba(0, 217, 255, 0.4)" }}
+          >
+            {roles[index]}
+          </motion.span>
+        </AnimatePresence>
       </div>
       <div className="flex items-center justify-center gap-2 mb-10">
         {roles.map((_, i) => (
-          <div
+          <motion.div
             key={i}
-            className="dot-pill rounded-full"
-            style={{
-              height: "5px",
-              width: i === index ? "28px" : "5px",
-              background: i === index ? "#00d9ff" : "rgba(255,255,255,0.15)",
+            className="rounded-full"
+            animate={{
+              height: 5,
+              width: i === index ? 28 : 5,
+              backgroundColor: i === index ? "#00d9ff" : "rgba(255,255,255,0.15)",
+              boxShadow: i === index ? "0 0 10px rgba(0,217,255,0.5)" : "none"
             }}
+            transition={{ duration: 0.3 }}
           />
         ))}
       </div>
@@ -155,6 +160,25 @@ function WorkflowBar() {
 }
 
 function Index() {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  
+  // Spring physics for buttery smooth parallax
+  const smoothX = useSpring(mouseX, { stiffness: 50, damping: 20 });
+  const smoothY = useSpring(mouseY, { stiffness: 50, damping: 20 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+      // Very subtle shift limits to roughly +/- 20px
+      mouseX.set((e.clientX - centerX) / 40);
+      mouseY.set((e.clientY - centerY) / 40);
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
   return (
     <div className="min-h-screen text-foreground">
       <Header />
@@ -163,30 +187,62 @@ function Index() {
       <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
         <motion.div
           className="relative z-10 text-center px-6 max-w-4xl mx-auto pt-16 w-full"
-          initial={{ opacity: 0, y: 44 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+          initial={{ opacity: 0, y: 60, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
         >
-          <p className="hero-sub text-white/30 text-lg md:text-xl tracking-[0.25em] uppercase mb-4">
+          <motion.p 
+            className="hero-sub text-white/40 text-lg md:text-xl tracking-[0.25em] uppercase mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+          >
             Hello! I&apos;m
-          </p>
+          </motion.p>
 
-          <h1 className="hero-name text-5xl md:text-7xl mb-2 leading-none tracking-tight">
+          <motion.h1 
+            className="hero-name text-5xl md:text-7xl mb-2 leading-none tracking-tight"
+            initial={{ opacity: 0, filter: "blur(10px)" }}
+            animate={{ opacity: 1, filter: "blur(0px)" }}
+            transition={{ delay: 0.4, duration: 1 }}
+            style={{ textShadow: "0 0 40px rgba(0, 217, 255, 0.3)" }}
+          >
             {personalInfo.name}
-          </h1>
+          </motion.h1>
 
-          <p className="hero-sub text-white/30 text-base md:text-xl tracking-wide mb-6">
-            A passionate <span className="text-[#00d9ff]/70">Full-Stack</span> &amp;{" "}
-            <span className="text-[#f59e0b]/70">ML</span> Developer
-          </p>
+          <motion.p 
+            className="hero-sub text-white/40 text-base md:text-xl tracking-wide mb-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+          >
+            A passionate <span className="text-[#00d9ff] font-medium drop-shadow-[0_0_8px_rgba(0,217,255,0.8)]">Full-Stack</span> &amp;{" "}
+            <span className="text-[#f59e0b] font-medium drop-shadow-[0_0_8px_rgba(245,158,11,0.8)]">ML</span> Developer
+          </motion.p>
 
-          <RoleRotator />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+          >
+            <RoleRotator />
+          </motion.div>
 
-          <p className="hero-sub text-white/35 text-base md:text-lg max-w-xl mx-auto mb-10 leading-relaxed">
+          <motion.p 
+            className="hero-sub text-white/45 text-base md:text-lg max-w-xl mx-auto mb-10 leading-relaxed"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1, duration: 0.8 }}
+          >
             {personalInfo.tagline}
-          </p>
+          </motion.p>
 
-          <div className="flex justify-center items-center gap-4 flex-wrap">
+          <motion.div 
+            className="flex justify-center items-center gap-5 flex-wrap"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.2, duration: 0.8 }}
+          >
             <SpotlightButton href="mailto:laasyakondoori@gmail.com" color="#00d9ff">
               <FileText size={14} />
               Contact Me
@@ -196,7 +252,7 @@ function Index() {
               View Projects
               <ArrowRight size={14} />
             </SpotlightButton>
-          </div>
+          </motion.div>
         </motion.div>
       </section>
 

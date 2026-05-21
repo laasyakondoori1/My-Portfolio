@@ -23,11 +23,25 @@ export function SpotlightButton({
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [magneticX, setMagneticX] = useState(0);
+  const [magneticY, setMagneticY] = useState(0);
 
   function handleMouseMove({ currentTarget, clientX, clientY }: MouseEvent) {
-    const { left, top } = currentTarget.getBoundingClientRect();
-    mouseX.set(clientX - left);
-    mouseY.set(clientY - top);
+    const { left, top, width, height } = currentTarget.getBoundingClientRect();
+    const relativeX = clientX - left;
+    const relativeY = clientY - top;
+    mouseX.set(relativeX);
+    mouseY.set(relativeY);
+    
+    // Magnetic pull calculation
+    setMagneticX((relativeX - width / 2) * 0.15);
+    setMagneticY((relativeY - height / 2) * 0.15);
+  }
+
+  function handleMouseLeave() {
+    setIsHovered(false);
+    setMagneticX(0);
+    setMagneticY(0);
   }
 
   const innerContent = (
@@ -119,31 +133,38 @@ export function SpotlightButton({
 
   if (to) {
     return (
-      <Link
-        to={to}
-        className={className}
-        style={buttonStyle}
-        onMouseMove={handleMouseMove}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        {innerContent}
+      <Link to={to} className="inline-block relative">
+        <motion.div
+          className={className}
+          style={{ ...buttonStyle, x: magneticX, y: magneticY }}
+          onMouseMove={handleMouseMove}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={handleMouseLeave}
+          animate={{ x: magneticX, y: magneticY }}
+          transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+        >
+          {innerContent}
+        </motion.div>
       </Link>
     );
   }
 
   return (
-    <a
-      href={href}
-      target={href?.startsWith("http") ? "_blank" : undefined}
-      rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
-      className={className}
-      style={buttonStyle}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {innerContent}
-    </a>
+    <div className="inline-block relative">
+      <motion.a
+        href={href}
+        target={href?.startsWith("http") ? "_blank" : undefined}
+        rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
+        className={className}
+        style={{ ...buttonStyle, x: magneticX, y: magneticY }}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={handleMouseLeave}
+        animate={{ x: magneticX, y: magneticY }}
+        transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+      >
+        {innerContent}
+      </motion.a>
+    </div>
   );
 }

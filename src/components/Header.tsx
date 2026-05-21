@@ -1,5 +1,5 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { useState, MouseEvent } from "react";
+import { useState, useEffect, MouseEvent } from "react";
 import { Menu, X, Home, Eye, EyeOff } from "lucide-react";
 import { motion, AnimatePresence, useMotionValue, useMotionTemplate } from "framer-motion";
 import { useHideAndSeek, toggleHideAndSeek } from "@/hooks/useHideAndSeek";
@@ -18,6 +18,15 @@ export function Header() {
   const mouseY = useMotionValue(0);
   const [isHovered, setIsHovered] = useState(false);
   const isHideAndSeekActive = useHideAndSeek();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   function handleMouseMove({ currentTarget, clientX, clientY }: MouseEvent) {
     const { left, top } = currentTarget.getBoundingClientRect();
@@ -65,7 +74,11 @@ export function Header() {
           }}
         ></div>
 
-        <nav className="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl px-6 py-3 flex items-center justify-between relative z-10">
+        <nav className={`transition-all duration-500 backdrop-blur-xl border rounded-2xl px-6 py-3 flex items-center justify-between relative z-10 ${
+          isScrolled 
+            ? "bg-black/60 border-white/20 shadow-[0_8px_32px_rgba(0,217,255,0.15)]" 
+            : "bg-black/40 border-white/10"
+        }`}>
           <Link
             to="/"
             className="text-xl font-bold text-[#00d9ff] cyan-glow"
